@@ -21,13 +21,13 @@ public:
         static Test instance;
         return instance;
     }
-    void static func1(const string& str, const string& str1) {
+    void func1(const string& str, const string& str1) {
         cout << str << ' ' << str1 << endl;
     }
-    void static func2(const string& str) {
+    void func2(const string& str) {
         cout << str << endl;
     }
-    void static func3(int& m) {
+    void func3(int& m) {
         cout << m << endl;
     }
 
@@ -35,10 +35,9 @@ public:
     template <typename F, typename... Args>
     void CallService(F f, Args&&... agrs)
     {
-        f(agrs...);
+        (this->*f)(std::forward<Args>(agrs)...); // (this->*f) 这样可以不用定义static函数
     }
 };
-
 
 int main()
 {
